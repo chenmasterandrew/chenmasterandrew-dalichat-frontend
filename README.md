@@ -16,11 +16,11 @@ Data flow within computer systems can get complicated very quickly, and this bec
 
 Introducting [UML](https://en.wikipedia.org/wiki/Unified_Modeling_Language) Sequence Diagrams, a standardized method for representing the behaviors of different parts of a system in relation to the user and other parts of the system. Below is a simple example of a UML Sequence Diagram, or Sequence Diagram for short:
 
-> ADD IMAGE HERE IN GH
+![image](https://user-images.githubusercontent.com/46639306/104112985-3965b800-52c3-11eb-8c92-73edc373f67a.png)
 
 Below is a more complex example of a UML Sequence Diagram:
 
-> ADD IMAGE HERE IN GH
+![image](https://user-images.githubusercontent.com/46639306/104113004-60bc8500-52c3-11eb-8921-9e26a89cc1eb.png)
 
 At their core, Sequence Diagrams are a method of representing interactions between parts of a system over time. In Sequence Diagrams, time is represented vertically with the top of the diagram being the start of the interaction and the bottom of the diagram being the end of the interaction. The horizontal element of the diagram shows the different components of the system in no inherent order (although it is often advantageous to place elements in the order of interaction from left to right).
 
