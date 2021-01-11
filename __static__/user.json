@@ -1,0 +1,19 @@
+{
+  "email": "test@test.com",
+  "username": "testuser",
+  "firstName": "Test",
+  "lastName": "User",
+
+  "isAdmin": true,
+  "isVerified": true,
+
+  "profileUrl": "https://images.squarespace-cdn.com/content/v1/551cbdc5e4b0cd11d2597487/1447027803292-3GG0FUZ2IKSZP46DV4MI/ke17ZwdGBToddI8pDm48kKbgLs0dyNXrIPWruf_85jEUqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYxCRW4BPu10St3TBAUQYVKcFZ0b4gElCwJPu3CwXUzaj-VTgorx61umS7pwK7jXwDxFd9iqF-qVcBVDsVgKcuL8/profile.jpg?format=500w",
+  "backgroundUrl": "https://images.squarespace-cdn.com/content/v1/54e8fd5ae4b06d2d721d9a97/1426440264683-96Q8ZN23Z13Y4PGNH8IA/ke17ZwdGBToddI8pDm48kDHPSfPanjkWqhH6pl6g5ph7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0mwONMR1ELp49Lyc52iWr5dNb1QJw9casjKdtTg1_-y4jz4ptJBmI9gQmbjSQnNGng/IMG_5486.JPG",
+  "portfolioUrl": "http://www.zingweb.com/",
+  "blurb": "Hello there! I'm a test user that's been statically generated from a JSON file.",
+
+  "posts": ["22222222", "33333333"],
+  "numPosts": 2,
+  "accountCreated": 1610318785458,
+  "_id": "11111111"
+}

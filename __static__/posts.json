@@ -1,0 +1,18 @@
+[
+  {
+    "content": "This is the content of the first test post!",
+    "likes": ["11111111"],
+    "numLikes": 1,
+    "postDate": 1610318785458,
+    "owner": "11111111",
+    "_id": "22222222"
+  },
+  {
+    "content": "This is the content of the second test post!",
+    "likes": [],
+    "numLikes": 0,
+    "postDate": 1610318785458,
+    "owner": "11111111",
+    "_id": "33333333"
+  }
+]

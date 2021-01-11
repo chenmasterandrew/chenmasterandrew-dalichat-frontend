@@ -1,119 +1,907 @@
-# Day 2 - Networking Basics
+# Day 3 - Frontend Basics
 
 This repository was designed and developed by [Adam McQuilkin '22](https://github.com/ajmcquilkin), and is intended to teach new DALI lab members the basics of MERN-stack Javascript web development as well as current best practices. To suggest changes to this repository, please create an issue [here](https://github.com/dali-lab/dalichat-frontend/issues) or create a pull request [here](https://github.com/dali-lab/dalichat-frontend/pulls).
 
 ## Overview
 
-Today we are focusing on planning out how dtaa flows through web applications. We will be introducing a tool ([UML Sequence Diagrams](#UML-Sequence-Diagrams)) to help you visualize these flows. You will then be planning out the different features of the DALIChat application and creating a UML Sequence Diagram for these features.
+Welcome to the wonderful and wacky world of React! Using the knowledge you learned during class today, we're going to be creating the first building blocks of your DALIChat application. We will first walk through some basics of how to convert designs into well-written, maintainable code and then walk through the basics of how we write React code at DALI. Finally, we will turn you loose and you will build the rest of today's components on your own.
 
 ## Core Concepts
 
-Before we begin planning out how data will flow through the DALIChat application, we must first introduce a tool for you to create visual representations of interactions within a system.
+Before we start writing code, we first need to review two core concepts of developing user interfaces in ReactJS.
 
-### UML Sequence Diagrams
+### Developing Designs
 
-Data flow within computer systems can get complicated very quickly, and this becomes a problem when you as a developer are trying to plan out the bahavior of a given application. Thankfully, there is a standardized way to represent this data flow through a given system!
+> SHARE FIGMA
 
-Introducting [UML](https://en.wikipedia.org/wiki/Unified_Modeling_Language) Sequence Diagrams, a standardized method for representing the behaviors of different parts of a system in relation to the user and other parts of the system. Below is a simple example of a UML Sequence Diagram, or Sequence Diagram for short:
+### React Basics Refresh
 
-![image](https://user-images.githubusercontent.com/46639306/104112985-3965b800-52c3-11eb-8c92-73edc373f67a.png)
-
-Below is a more complex example of a UML Sequence Diagram:
-
-![image](https://user-images.githubusercontent.com/46639306/104113004-60bc8500-52c3-11eb-8921-9e26a89cc1eb.png)
-
-At their core, UML Sequence Diagrams are a method of representing interactions between parts of a system over time. In UML Sequence Diagrams, time is represented vertically with the top of the diagram being the start of the interaction and the bottom of the diagram being the end of the interaction. The horizontal element of the diagram shows the different components of the system in no inherent order (although it is often advantageous to place elements in the order of interaction from left to right).
-
-Additionally, UML Sequence Diagrams contain various notational elements that represent different types of interactions between elements of the system. Before continuing, read through the "Sequence Diagram Notation" section ("Notations" in the sidebar) of [this link](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-sequence-diagram/) to learn more about these elements. Focus mainly on the `Actor`, `Lifeline`, `Activation`, `Call Message`, and `Return Message` elements. For additional information on UML Sequence Diagrams, see [this link](https://www.geeksforgeeks.org/unified-modeling-language-uml-sequence-diagrams/).
-
-We will be creating one of these diagrams today to represent the data flow for different information flows within your DALIChat application.
+> TODO
 
 ## Tasks
 
 Below are the tasks to complete before next class.
 
-### Review Feature Spec for DALIChat
+### Initialize Needed Files
 
-For this project, let's imagine that you're working with a partner that has given you the following list of requirements for a new social media platform they're calling DALIChat. The application will have the following pages:
+1. Image and icon files
+2. JSConfig.json
+3. Variables.scss
 
-```text
-Home / Profile Page
-Search Page
-Explore Page
-Settings Page
-User Page
+### Start Dev Server
+
+As you discussed in class, to view the changes you make to the code live in browser, we use a package called `webpack-dev-server` to serve your website, watch for changes to the files within the project, and refresh your UI to reflect these changes. We have already configured this plugin for you in your `webpack.config.js` file, but there are still a few commands you need to run before you can view your app in the browser.
+
+Even though you have downloaded all of the starter code for this app, if you try running your dev server you will see many errors in the console saying things along the lines of "package or file not found". This is due to the fact that, as listed in your `package.json` file, this project requires pre-written packages to perform various required tasks. These files are stored in the cloud and are not currently installed, so before we can run anything we must download these packages.
+
+> NPM AND YARN LINKS
+
+To download these packages, we will be using the `yarn` package manager. To download all required files from the NPM package repository, run the following command:
+
+```shell
+yarn install
 ```
 
-The application will allow users to complete the following actions on each page. A star (`*`) denotes a feature the user can initiate through interacting with the site (i.e. by clicking on a button).
+This command will request the required packages from NPM and load them into the `node_modules` folder in the root of your project. You can also simply run the `yarn` command, which is an alias for the `yarn install` command.
 
-```text
-Home / Profile Page:
-- View information about user's own profile
-- View user's own posts
-- * Create a new post
-- * Delete a post
+If this completes successfully, you will see a green "success" message in the console output. Once you see this message, all required files have been installed and we can now start the development server. To start the dev server, run the following command:
 
-Search Page:
-- * Search for users and posts (one request for both)
-- View results of this search
-
-Explore Page:
-- View newest posts posted on the platform
-- * View most popular posts on the platform
-
-Settings Page:
-- View personal account settings
-- * Modify personal account settings
-
-User Page:
-- View most recent posts from user
-- * View most popular posts from user
+```shell
+yarn start
 ```
 
-The partner has determined that today we will focus on creating a UML Sequence Diagram showing the system interactions required to make this page functional.
+You should see webpack begin compiling your application's code, and once this is complete you can open `localhost:8080` in your browser and see your project in the browser!
 
-### Create Homepage UML Sequence Diagram
+> As a reminder, running `yarn COMMAND` will tell yarn to search in the `scripts` field of your project's `package.json` file for a key that matches the `COMMAND` string you entered. In this case, `yarn start` tells yarn to run the command associated with the `start` key in the `package.json/scripts` object, which initializes the webpack development server.
 
-Now we move on to creating a UML Sequence Diagram for the functionality of the homepage. It may seem like you need to have designs for an application before knowing how the data will flow, but we can actually glean a significant amount of information from the feature specification that we've been provided.
+### Component Prop Requirements
 
-> :exclamation: **Important:** This is an exercise, and you should **never** try to glean information from a feature specification. **_If you have questions, reach out to your partner._** This will make sure your team and the partners are on the same page, and make sure that your work won't be wasted.
+Now that we have started the dev server, we can begin creating React components! Before we begin doing this though, we must first discuss what information each component will require to function. We will then be able to pass this information in through the component's `props` object.
 
-For one, we know which features will be on which pages. This tells us two things:
+> As a note, it is best practice to always do this before creating a component. Even though these props may change over time, thinking about which information each component requires ahead of time will save you and your team headaches later in the dev process.
 
-1. The first frontend-backend interaction will be requesting and returning the HTML for the frontend application
+Let's start with a simple `Button` component. This component standardizes the styling of buttons within the app, but will need to function similarly to a normal HTML `button` element. Let's think about the values this component will need to function.
 
-2. We will then need to make at two API requests to load data for the user after requesting and receiving the HTML for the page
+First, let's think about which values this component will need to render itself effectively. Since this is a button and as such needs to be human-readable, we need to pass a `label` prop into the button to tell it what text to render to the user within the button.
 
-In this case, the information that needs to be requested is the user's own object _from the database_ and their posts _from the database_.
+Next, let's think about which values this component will need to complete its intended functionality. Since this is a button, we will need to know what to do when the button is clicked. As such, we need to pass a function to the button called `onClick` that will tell the button what to do when it is clicked. To support buttons within HTML forms (more on this later), we will also need to pass an `isSubmit` prop to tell the button whether or not it is meant to submit a `form` element.
 
-> **Remember:** Your frontend should **never** interact directly with your database. All data you need from the database will be fetched through requests with the backend.
+Finally, since this is a component that we intend to reuse in many places throughout the app, it is good practice to pass a `className` prop that will allow the user of the component to pass additional class names to the element to add custom styles.
 
-This means that after the page loads, the frontend needs to make two requests to the backend (assume these requests are made one after the other). This also means that the page isn't considered loaded until these requests are complete.
+> NOTE ABOUT COMPONENT REUSABILITY
 
-> Pause here and create a new UML Sequence Diagram in a [draft Figma document](https://www.figma.com/blog/the-power-of-figma-drafts/) (as discussed during class) for the initial loading of the site. If you need an example, see the [basic example above](#UML-Sequence-Diagrams).
+This leaves us with the following props:
 
-After these two requests have been made and the initial page load interaction is complete, this page also has two features that are so-called "event-based" (denoted by the `*` in the feature specification). Something being event-based signifies that this action is user-initiated, and does not need to be completed automatically by the site during initial load of the page. The homepage has two of these event-based flows, one for creating a post and one for deleting a post. As a reminder, event-based data flows will be placed below the initial load of the site. The complex example [given above](#UML-Sequence-Diagrams) contains three of these event-based flows ("Create Post", "Update Post", and "Upload Image for Post"). The new post flow in your diagram will be very similar to the "Create Post" example given above, and the delete post flow will also contain many of the same elements.
+```text
+label: string - text to display within button
+onClick: function - callback to call when button is clicked
+* isSubmit: boolean - whether or not the button is of type `submit`
+* className: string - additional class names to append to the top level of the component
+```
 
-> Pause here and add the event-based flows for post creation and post deletion. As a note, the "Delete Post" request coming back from the database will contain data on the deletion action and not the object itself. You can write "Deletion Request Metadata" for the response from the database to the server and for the response from the server to the frontend.
+Note the props that are labelled with a star. These are props that aren't required for the component to function, but add additional functionality when needed. The fact that these props are optional means that we need to assign them default values in the event that the user doesn't pass these props.
 
-Congratulations, you've completed your first UML Sequence Diagram! You will be using this diagram later to implement the actual data flow for your functioning application.
+Below is a list of the components you will be building today and the props that they should accept, with optional props being assigned a value:
 
-> Pause here and complete a UML Sequence Diagram for the "Settings Page" features. Assume that the user's settings need to be fetched from the user's object within the database on initial page load, an that to update the user's settings you must make an update request to the server similarly to the one shown in the [complex example](#UML-Sequence-Diagrams) above.
+```text
+Button:
+  label: string
+  onClick: function
+  isSubmit: boolean = false
+  className: string = ''
+
+ErrorPopover:
+  errorMessage: string
+  clearCurrent: function
+  errorTitle: string = ''
+
+LoadingIcon:
+  -- No props --
+
+ProfileCard:
+  fullName: string
+  profileUrl: string
+  username: string
+  blurb: string
+  portfolioUrl: string
+  numPosts: number
+  uid: string
+  className: string = '',
+
+ProfileIcon:
+  imgUrl: string
+  username: string
+  uid: string
+  className: string = ''
+
+Tab:
+  label: string
+  isActive: boolean
+  onClick: function
+
+TabContainer:
+  activeTab: string
+  setActiveTab: function
+  children: JSX.Element | JSX.Element
+  className: string = ''
+
+TabGroup:
+  activeTab: string
+  setActiveTab: function
+  user: object
+  children: JSX.Element | JSX.Element[]
+  className: string = ''
+```
+
+As a note, the `children` prop is a prop that the `react` library passes into all React components. It represents any JSX elements (of type `JSX.Element` or an array of `JSX.Element` objects) nested (contained) within the component. For example:
+
+```html
+<ComponentOne id="one">
+  <p id="two">Hello, world!</p>
+</div>
+```
+
+The `children` prop for `ComponentOne` would automatically resolve to contain the following nested JSX elements:
+
+```html
+<p id="two">Hello, world!</p>
+```
+
+The same goes for native JSX elements (think `p`, `a`, `div`, etc...). As such, the `children` prop for the `p` JSX element would contain the string `"Hello, world!"`.
+
+The most common use for the `children` prop is for displaying content within another element. For example, the `ComponentOne` component could be implemented as shown below:
+
+```js
+// ... imports here
+
+const ComponentOne = ({ children }) => (
+  <div id="componentone-container">{children}</div>
+);
+
+export default ComponentOne;
+```
+
+This would render the contents of the `children` prop within the `ComponentOne` element. This is useful for layout elements that contain other JSX elements, such as modals (popups).
+
+Additionally, you can also modify the way you render components based on attributes of child elements passed via the `children` prop. Since the `children` prop is a complete JSX element, it is possible to access props of children components contained within the `children` prop. As a note, only do this of you are confident of the structure of the children JSX elements. We will discuss this more within the `TabContainer` component ([see below](#TabContainer-Component)).
+
+### Configure Folder Structure
+
+Now that we've discussed what props each component will require, we need to set up the file structure of your project directory. Your working directory should already contain a `src/components` directory. If not, create one now. The `components` directory is where we will place all React components that we create for the project.
+
+We now need to create subdirectories that contain the code for each of the components we will be creating. In DALI we create a directory for each React component that we create with the same name as the component. For example, for the `ComponentOne` component we would create a `components/ComponentOne` directory. This directory will contain all of the code required to render this component. At a minimum this includes the `index.js` file which contains the component's declaration and a `SCSS` file with the same name as the component. Below is an example directory following this pattern:
+
+```text
+/src
+  /components
+    /ComponentOne
+      index.js
+      ComponentOne.scss
+```
+
+> Any files with the name of `index.js` have special import abilities within Javascript. Instead of importing the file `index.js` as `import ComponentOne from '../ComponentOne/index.js`, we can instead say `import ComponentOne from '../ComponentOne`. This tells JS that we want to import the `ComponentOne` component from the `index.js` file within the `/ComponentOne` directory.
+
+As a project gets larger, this `components` directory will become very large and difficult to work with. To avoid this, it is often advantageous to group similar components within subdirectories of the `components` directory. This grouping can be by use case (think `/pages`), by function (think `/tabs`), or by any other grouping that you and your team decide to be useful. Just make sure that these groupings make sense to outside observers and that you stay consistent with what goes in each subdirectory, since inconsistency defeats the point of this increased organization.
+
+With this in mind, we now need to create these subdirectories for the DALIChat application. For today we will need to create three function-based subdirectories of the `/components` directory, as shown below:
+
+```text
+/src
+  /components
+    /generic
+    /profile
+    /tabs
+```
+
+Once you have created these three subdirectories, create the following subdirectories within the following folders:
+
+```text
+/src
+  /components
+    /generic
+      /Button
+      /ErrorPopover
+      /LoadingIcon
+
+    /profile
+      /ProfileCard
+      /ProfileIcon
+
+    /tabs
+      /Tab
+      /TabContainer
+      /TabGroup
+```
+
+You will populate these subdirectories later within the lesson, but for now they will remain empty.
+
+Finally, place the `App.js` component into an `/App` subdirectory of the `components` directory. Then, open the `src/index.js` file and update the App import line from `import App from './App'` to `import App from './components/App`. This completes the stetup of the `components` directory!
+
+### Import Styling
+
+#### Generic Styling
+
+Next, you will be importing pre-made styles into your application. These styles work with a file called `variables.scss`, which contains style elements that are reused across your application. We will discuss this file more in later classes. For now, create a `src/utils` folder to contain utility files for use across the application and create a `variables.scss` file within this new directory. Place the following styles into the `variables.scss` file:
+
+```scss
+/* -------- Imports -------- */
+
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@600;700&display=swap"); // Dosis
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap"); // Open Sans
+
+/* -------- Variables -------- */
+
+$dosis: "Dosis", sans-serif;
+$open-sans: "Open Sans", sans-serif;
+
+$blue: #1e5779;
+$white: #ffffff;
+$error-light: #ff8b81;
+$error-dark: #e71d0c;
+
+$dark-gray: #404040;
+$mid-gray: #8a8e90;
+$light-gray: #f0f0f0;
+$background: #f4f6f8;
+
+$page-width: 960px;
+$post-margin: 30px;
+
+/* -------- Standard Styling -------- */
+
+h1 {
+  margin: 0px;
+  color: $dark-gray;
+  font-family: $dosis;
+  font-weight: 700;
+  font-size: 72px;
+}
+
+h2 {
+  margin: 0px 0px 60px;
+  color: $dark-gray;
+  font-family: $dosis;
+  font-weight: 600;
+  font-size: 60px;
+}
+
+/* -------- Mixins -------- */
+
+@mixin header-image {
+  margin-bottom: -62px;
+}
+
+@mixin page-layout {
+  width: $page-width;
+  margin: auto auto 48px;
+}
+
+@mixin label-styling {
+  margin: 0px 0px 9px;
+  color: $dark-gray;
+
+  font-family: $open-sans;
+  font-weight: 400;
+  font-size: 12px;
+}
+
+@mixin input-styling {
+  padding: 12px 18px;
+  color: $dark-gray;
+
+  font-family: $open-sans;
+  font-weight: 400;
+  font-size: 12px;
+
+  background: $light-gray;
+  border-radius: 8px;
+  border: none;
+
+  &:-moz-ui-invalid {
+    border: 2px solid $error-dark;
+    box-shadow: none;
+  }
+
+  &::placeholder {
+    font-family: $open-sans;
+    color: $mid-gray;
+  }
+}
+```
+
+#### File-Specific Styling
+
+With your `variables.scss` file populated, create the following files and paste the included styling code into each respective file. For example, create a file called `ErrorPopover.scss` in the `src/components/generic/ErrorPopover` directory and paste in the included `SCSS` code.
+
+##### Generic
+
+<details>
+
+<summary>src/components/generic/Button/Button.scss</summary>
+
+```scss
+@import "../../../utils/variables.scss";
+
+.button-container {
+  margin: 0px auto;
+  padding: 12px 36px;
+  font-family: $open-sans;
+  color: $white;
+
+  background: $blue;
+  box-shadow: 0px 4px 10px rgba(94, 99, 102, 0.25);
+  border-radius: 8px;
+  border: none;
+
+  cursor: pointer;
+}
+```
+
+</details>
+
+<details>
+
+<summary>src/components/generic/ErrorPopover/ErrorPopover.scss</summary>
+
+```scss
+@import "../../../utils/variables.scss";
+
+#error-popover-container {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 30px 15px 21px;
+  box-sizing: border-box;
+  width: 250px;
+
+  position: fixed;
+  z-index: 999;
+  right: 0px;
+  top: 120px;
+
+  background: $white;
+  border-radius: 8px 0px 0px 8px;
+  box-shadow: 0px 4px 10px rgba(94, 99, 102, 0.125);
+  border: 1px solid $light-gray;
+
+  font-family: $open-sans;
+  transform: translateX(100%);
+  transition: 0.3s ease-in-out transform;
+
+  &.active {
+    transform: translateX(0%);
+  }
+
+  #error-title-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: center;
+    margin: 0px auto 7px 0px;
+
+    svg {
+      margin: auto 7px auto 0px;
+    }
+
+    #error-title {
+      margin: auto 0px;
+      color: $error-dark;
+      font-weight: 600;
+      font-size: 15px;
+    }
+  }
+
+  #error-content {
+    margin: 0px auto 0px 0px;
+    color: $dark-gray;
+    font-weight: 400;
+    font-size: 12px;
+  }
+}
+```
+
+</details>
+
+<details>
+
+<summary>src/components/generic/LoadingIcon/LoadingIcon.scss</summary>
+
+```scss
+@import "../../../utils/variables.scss";
+
+.loading-icon-container {
+  font-family: $open-sans;
+  font-weight: 400;
+  font-size: 12px;
+}
+```
+
+</details>
+
+##### Profile
+
+<details>
+
+<summary>src/components/profile/ProfileCard/ProfileCard.scss</summary>
+
+```scss
+@import "../../../utils/variables.scss";
+
+.profile-card-container {
+  display: flex;
+  flex-direction: column;
+  width: 257px;
+  padding: 20px;
+  position: relative;
+
+  font-family: $open-sans;
+  background: $white;
+  box-shadow: 0px 4px 10px rgba(94, 99, 102, 0.125);
+  border-radius: 8px;
+
+  svg {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+  }
+
+  .profile-image {
+    width: 96px;
+    height: 96px;
+    margin: 0px auto 12px;
+  }
+
+  .portfolio-card-name {
+    margin: 0px 0px 3px;
+    text-decoration: none;
+
+    color: $dark-gray;
+    text-align: center;
+    font-weight: 600;
+    font-size: 15px;
+  }
+
+  .portfolio-card-username {
+    margin: 0px;
+    text-decoration: none;
+
+    color: $mid-gray;
+    text-align: center;
+    font-weight: 400;
+    font-size: 12px;
+  }
+
+  p,
+  a {
+    margin: 9px 0px 0px;
+    text-align: center;
+    color: $dark-gray;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 155%;
+  }
+
+  .portfolio-card-portfolio-url {
+    color: $blue;
+  }
+
+  .portfolio-card-posts {
+    color: $mid-gray;
+  }
+}
+```
+
+</details>
+
+</details>
+
+<details>
+
+<summary>src/components/profile/ProfileIcon/ProfileIcon.scss</summary>
+
+```scss
+@import "../../../utils/variables.scss";
+
+.profile-icon-container {
+  width: 40px;
+  height: 40px;
+
+  .profile-icon {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid $light-gray;
+  }
+}
+```
+
+</details>
+
+</details>
+
+</details>
+
+##### Tabs
+
+<details>
+
+<summary>src/components/tabs/Tab/Tab.scss</summary>
+
+```scss
+@import "../../../utils/variables.scss";
+
+.tab-container {
+  list-style: none;
+
+  button {
+    color: $dark-gray;
+    font-family: $open-sans;
+    font-weight: 400;
+    font-size: 12px;
+
+    width: 100%;
+    height: 100%;
+    padding: 20px 30px 19px;
+    box-sizing: border-box;
+    background: none;
+    border: none;
+
+    cursor: pointer;
+  }
+
+  &.active {
+    color: $blue;
+    border-bottom: 2px solid $blue;
+    margin-bottom: -1px; // Positions bottom border correctly
+  }
+}
+```
+
+</details>
+
+<details>
+
+<summary>src/components/tabs/TabContainer/TabContainer.scss</summary>
+
+```scss
+@import "../../../utils/variables.scss";
+
+.tab-container-container {
+  background: $white;
+  box-shadow: 0px 4px 10px rgba(94, 99, 102, 0.125);
+  border-radius: 8px;
+  flex: 1;
+
+  .tab-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 0px;
+    padding: 0px;
+    border-bottom: 1px solid $light-gray;
+  }
+
+  .tab-container-content {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+  }
+}
+```
+
+</details>
+
+<details>
+
+<summary>src/components/tabs/TabGroup/TabGroup.scss</summary>
+
+```scss
+@import "../../../utils/variables.scss";
+
+.tabgroup-container {
+  display: flex;
+  flex-direction: row;
+  margin: auto auto 48px;
+  width: 100%;
+
+  position: relative;
+  z-index: 2;
+
+  .tabgroup-profile-card {
+    position: sticky;
+    margin: 0px 24px auto 0px;
+  }
+}
+```
+
+</details>
+
+### Creating Basic Components
+
+Once you've pasted all of the required styling into its respective files, we are finally ready to write some React components! You will be walked through creating the `Button`, `ProfileIcon`, and `ProfileCard` components and you will then create the `Tab` and `TabGroup` components. You will be provided the code for the `TabContainer` component.
+
+#### Button Component
+
+We will first start with the `Button` component, which is arguably the most basic component within the DALIChat application. The `Button` component is a wrapper for the default `button` JSX element that standardizes how buttons within the app are styled.
+
+When creating the `Button` component, we will follow the following steps:
+
+1. Import React and styles file
+2. Create empty Button component and export default (with parens shortcut)
+3. Destructure required props with required defaults
+4. Lay out JSX structure with all required elements (using sematic html)
+5. Fill in JSX props and callbacks
+6. Assign classnames and ids (depending on context) to elements
+7. Style components in scss (this has been provided already)
+
+To begin, we will create the `index.js` file within the `components/generic/Button` directory. We will then import React and the styling file with the following lines:
+
+```js
+import React from "react"; // This is needed whenever using JSX syntax
+import "./Button.scss"; // Tells browser how to style the component
+```
+
+Next, we will create an empty `Button` component and export it as default from the file.
+
+> As a note, using `export default SOMETHING` allows the import of `SOMETHING` from the root of the file in the following way: `import SOMETHING from './someFile`. You can also simply export `SOMETHING` from a file (known as a named export) using `export SOMETHING` and access it with `import { SOMETHING } from './someFile'`.
+
+Create the empty `Button` component in the following way:
+
+```js
+/* ... */
+
+const Button = () => (
+  <div>
+    <div>This is content in the Button component!</div>
+  </div>
+);
+
+export default Button;
+```
+
+> As a note, `const Button = () => (...);` is shorthand for `const Button = () => { return (...); }`
+
+We now need to specify which props are needed by this component. As we specified above, the `Button` component needs the following props:
+
+```text
+label: string
+onClick: function
+isSubmit: boolean = false
+className: string = ''
+```
+
+We specify these props in the declaration of the functional component as below. Note how optional props are given a default value with the `=` operator:
+
+```js
+/* ... */
+
+const Button = ({ label, onClick, isSubmit = false, className = "" }) => (
+  <div>
+    <div>This is content in the Button component!</div>
+  </div>
+);
+
+/* ... */
+```
+
+We can now access these props from within the `Button` component. With these props, we can create the JSX content of the `Button` component:
+
+```js
+/* ... */
+
+const Button = ({ label, onClick, isSubmit = false, className = "" }) => (
+  <div>
+    <button>{label}</button>
+  </div>
+);
+
+/* ... */
+```
+
+Then we specify callbacks and additional props to sub-elements of the `Button` component:
+
+```js
+/* ... */
+
+const Button = ({ label, onClick, isSubmit = false, className = "" }) => (
+  <button
+    type={isSubmit ? "submit" : "button"}
+    onClick={isSubmit ? () => {} : onClick}
+  >
+    {label}
+  </button>
+);
+
+/* ... */
+```
+
+We can now add class names and ids to the children JSX elements:
+
+```js
+/* ... */
+
+const Button = ({ label, onClick, isSubmit = false, className = "" }) => (
+  <button
+    type={isSubmit ? "submit" : "button"}
+    className={`button-container ${className}`}
+    onClick={isSubmit ? () => {} : onClick}
+  >
+    {label}
+  </button>
+);
+
+/* ... */
+```
+
+Note how we give the `button` JSX element a `className` of `"button-container"` but also allow the user to specify their own custom `className` prop and add it to the `button` element. This is intended to be used to add layout styles, such as `margin` and `flex`.
+
+Normally we would style the component during this final step, but to save time and effort we will be providing many of the styles for this class directly to you. This means that you will need to follow along with the layout of the styles within the `*.scss` files to make sure the structure of your components' JSX is the same as that of the styling file.
+
+> Remember that `SCSS` allows nesting of rules, which limits the scope of these rules. For example, take the following style:
+>
+> ```scss
+> .class-one {
+>   #id-two
+>     color: green;
+>   }
+> }
+> ```
+>
+> This rule will only apply to elements of the following form:
+>
+> ```html
+> <element className="class-one">
+>   <element id="id-two">I will be green</element>
+> </element>
+> ```
+>
+> In this case the type of the element doesn't matter, but an element with the id `id-one` must be contaned within an element with a class name of `class-one` for the style to take effect. For example, the rule will **not** apply to the following sets of JSX:
+>
+> ```html
+> <element>
+>   <element id="id-two">I will NOT be green</element>
+> </element>
+> ```
+>
+> ```html
+> <element>I will NOT be green</element>
+> ```
+>
+> ```html
+> <element className="class-two">
+>   <element id="id-two">I will NOT be green</element>
+> </element>
+> ```
+>
+> This means that your SCSS will follow the structure of the JSX you are writing, but it also means that you can infer the structure of the JSX from the SCSS file. Again gleaning information from a file is generally not advised, but in this case we both want to provide you the styles ahead of time and we want you to follow what DALI considers to be good code layout practices.
+
+You should end up with a `Button` component that looks like this!
+
+```js
+import React from "react";
+import "./Button.scss";
+
+const Button = ({ label, onClick, isSubmit = false, className = "" }) => (
+  <button
+    type={isSubmit ? "submit" : "button"}
+    className={`button-container ${className}`}
+    onClick={isSubmit ? () => {} : onClick}
+  >
+    {label}
+  </button>
+);
+
+export default Button;
+```
+
+To view this component in your browser, import the `Button` component and then insert the following JSX into the `App` component and open `localhost:8080` with your dev server running:
+
+```html
+<Button label="Test Label" onClick={() => console.log('clicked!')} />
+```
+
+For the following components that you will be creating, we recommend that you import each component into the `App` component to view your progress on the component and to get a feel for working with a live-reloading dev server.
+
+#### ProfileIcon Component
+
+You will now be creating the `ProfileIcon` component. This component will be a single `img` element with a `className` of `profile-icon` contained within a single `div` element with a `className` of `profile-icon-container`. This component will take an `imageUrl` prop, a `username` prop, a `uid` prop, and a `className` prop.
+
+The `imageUrl` prop will be passed into the `src` prop of the `img` element, the `username` prop needs to be placed into the `alt` prop of the `img` element as below:
+
+```text
+alt={`profile of user ${username}`}
+```
+
+Insert the `className` prop into the top-level container of the element (in this case the `div`) as follows:
+
+```text
+className={`profile-icon-container ${className}`}
+```
+
+> Discuss image importing
+> Show images of completed components
+
+#### ProfileCard Component
+
+To create the `ProfileCard` component, again walk through the basic steps to creating a React component. Insert the basic JSX elements into the `ProfileCard` component with appropriate class names and ids by following the structure of the `ProfileCard.scss` file. This component will use anchors (`a`) for the `fullName` and `username` props with `href` props of `/user/{uid}`
+
+> Discuss svg importing
+
+When including the `blurb` and `portfolioUrl` props, note that we haven't assigned these props defaults while they are technically optional. The reason we have done this is because we want to use the existence (or lack thereof) to change how the component is rendered. We do this using the `logical AND` operator (`&&`), which you may be familiar with from previous CS classes. In React, we can use this operator to modify the rendering of components based on boolean conditions. Within React, logical AND has the following behavior:
+
+> LINK FOR AND
+
+```js
+<div>{blurb && <p>{blurb}</p>}</div> // If blurb is undefined (not passed as a prop), this expression returns false
+```
+
+This means that if blurb doesn't exist, this expression will not render the paragraph element (`p`) and will return `false` (telling React to not render anything for this line).
+
+We will be using this behavior on the `blurb` and `portfolioUrl` props to not render anything in the event that either are not defined.
+
+#### TabContainer Component
+
+To create the `TabContainer` component, first create the outline of a basic React component, then create a container `div` with a child `div` and a child ordered list (`ol`). For this component, we must explicitly return JSX and cannot use the shorthand mentioned above.
+
+Above the `return (...)` function call, insert the following line:
+
+```js
+const childrenArray = React.Children.toArray(children);
+```
+
+This allows us access to an array of JSX elements representing the children of the current React component (as discussed [above](#Component-Prop-Requirements)). We will then be able to iterate through these children and render content based on each child JSX element.
+
+> SHOW DESIGNS
+
+The `TabContainer` component is intended to simplify the process of creating a series of tabs and rendering only the content from the active tab. Below is an example of the usage of the `TabContainer` component:
+
+```html
+<TabContainer activeTab="{activeTab}" setActiveTab="{setActiveTab}">
+  <div label="New Posts">Content of "New Posts" tab</div>
+  <div label="Popular Posts">Content of "Popular Posts" tab</div>
+</TabContainer>
+```
+
+Each child of the `TabContainer` component is expected to be passed a `label` prop, and this label prop is what will be rendered into the Tab element created for each child. In this example there will be two tabs created, one called "New Posts" and one called "Popular Posts". Again, each tab is identified by its `label` prop.
+
+If the `label` prop of a given child element matches with the `activeTab` prop of the `TabContainer` component, the `TabContainer` element will render the content of only that specific child element, allowing the user to only see the content of one tab at a time.
+
+We can implement this functionality by acessing the `children` prop of the `TabContainer` component. To do this, we need to complete the following steps:
+
+1. Iterate through each child of the `TabContainer` component
+2. Extract the `label` prop of the child component
+3. Render a tab with the given label
+4. Render the content of the given tab below the tab
+
+To iterate t
+
+> Discuss svg importing
+
+### Create Other Generics
+
+Introduce good practices (follow scss files for JSX structure, destructure inline, etc...)
+
+create all other components based on required props and designs
+
+Mock Button, LoadingIcon in App
+Mock ProfileCard in
+Place ErrorPopover in App
 
 ## Readings
 
-Below are the reading materials that will prepare you for next class' material.
+> TODO
 
-### JSX
+### Component Reusability
 
-Next class, you will be starting to learn the frontend web development framework ReactJS! [ReactJS](https://reactjs.org/), known simply as React, allows you to make dynamic applications in the Javascript programming language. To give one example, all of Facebook's frontend infrastructure is built in ReactJS!
+> TODO
 
-Before next class, please read through the following articles from the ReactJS documentation:
+### Intro to Lifecycle Methods
 
-1. [Hello World](https://reactjs.org/docs/hello-world.html) ([ReactJS](https://reactjs.org/) Documentation)
+> TODO
 
-2. [Introducing JSX](https://reactjs.org/docs/introducing-jsx.html) ([ReactJS](https://reactjs.org/) Documentation)
+### Intro to Hooks
 
-If you aren't fairly confident with Javascript, please also look over [this tutorial](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript) before next class.
+> TODO
 
 As always, if you ever need any help feel free to reach out to us at any time. Good luck!
