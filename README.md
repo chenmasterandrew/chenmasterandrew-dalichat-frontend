@@ -12,21 +12,35 @@ Before we start writing code, we first need to review two core concepts of devel
 
 ### Developing Designs
 
-> SHARE FIGMA
+Before we begin, take a look at the [designs](https://www.figma.com/file/xyiPBrqZVD3YZ9vyciycbY/DALI-Dev-Intro-DALIChat?node-id=67%3A0) we will be working with today. When building components today you will be expected to reference these designs.
 
-### React Basics Refresh
+A few things to note before we dive into the tasks for today about working with Figma designs. Firstly, every Figma component is fundamentlly a group of Figma basic elements (rectangles, ellipses, lines, images, etc...) that are built into "Components" that can be referenced elsewhere (very similarly to React if you think about it \*wink wink\*). To view properties of an element, click on the component and open the "Inspect" tab in the upper right of the window. This will give you the CSS properties needed to build the element (although you can usually ignore the `position` suggestion).
 
-> TODO
+> If you're having trouble selecting a specific element, try `ctrl+click` on the element.
+
+Additionally, you can see the component layout in the left panel of the Figma window. You can twirl open components and see what layers are required to create a component. Each layer will almost always correlate directly to a JSX element in a React component, so this panel is very useful when building from Figma designs.
+
+For this lesson we have already provided all of the needed styling files, but you will still need to know how to compose the components you will be building today.
+
+> **Important:** Elements you will be building today may contain SVG elements. We will discuss how to load these elements later in the course, so for now replace these with empty `<svg />` tags.
 
 ## Tasks
 
 Below are the tasks to complete before next class.
 
-### Initialize Needed Files
+### Initialize JSConfig.json
 
-1. Image and icon files
-2. JSConfig.json
-3. Variables.scss
+Create a new file at the root of your project named `jsconfig.json`. This is a configuration file that tells VSCode 1) that this is a Javascript project and 2) to type-check props and functions within the project. Click here for [more information](https://code.visualstudio.com/docs/languages/jsconfig) on `jsconfig.json` files. Paste the following code into the file you created:
+
+```json
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "jsx": "react"
+  },
+  "include": ["src/**/*"]
+}
+```
 
 ### Start Dev Server
 
@@ -34,9 +48,7 @@ As you discussed in class, to view the changes you make to the code live in brow
 
 Even though you have downloaded all of the starter code for this app, if you try running your dev server you will see many errors in the console saying things along the lines of "package or file not found". This is due to the fact that, as listed in your `package.json` file, this project requires pre-written packages to perform various required tasks. These files are stored in the cloud and are not currently installed, so before we can run anything we must download these packages.
 
-> NPM AND YARN LINKS
-
-To download these packages, we will be using the `yarn` package manager. To download all required files from the NPM package repository, run the following command:
+To download these packages, we will be using the [`yarn` package manager](https://yarnpkg.com/). To download all required files from the [NPM package repository](https://www.npmjs.com/), run the following command:
 
 ```shell
 yarn install
@@ -67,8 +79,6 @@ First, let's think about which values this component will need to render itself 
 Next, let's think about which values this component will need to complete its intended functionality. Since this is a button, we will need to know what to do when the button is clicked. As such, we need to pass a function to the button called `onClick` that will tell the button what to do when it is clicked. To support buttons within HTML forms (more on this later), we will also need to pass an `isSubmit` prop to tell the button whether or not it is meant to submit a `form` element.
 
 Finally, since this is a component that we intend to reuse in many places throughout the app, it is good practice to pass a `className` prop that will allow the user of the component to pass additional class names to the element to add custom styles.
-
-> NOTE ABOUT COMPONENT REUSABILITY
 
 This leaves us with the following props:
 
@@ -135,7 +145,7 @@ TabGroup:
 
 As a note, the `children` prop is a prop that the `react` library passes into all React components. It represents any JSX elements (of type `JSX.Element` or an array of `JSX.Element` objects) nested (contained) within the component. For example:
 
-```html
+```jsx
 <ComponentOne id="one">
   <p id="two">Hello, world!</p>
 </div>
@@ -143,7 +153,7 @@ As a note, the `children` prop is a prop that the `react` library passes into al
 
 The `children` prop for `ComponentOne` would automatically resolve to contain the following nested JSX elements:
 
-```html
+```jsx
 <p id="two">Hello, world!</p>
 ```
 
@@ -750,7 +760,7 @@ Normally we would style the component during this final step, but to save time a
 >
 > This rule will only apply to elements of the following form:
 >
-> ```html
+> ```jsx
 > <element className="class-one">
 >   <element id="id-two">I will be green</element>
 > </element>
@@ -758,17 +768,17 @@ Normally we would style the component during this final step, but to save time a
 >
 > In this case the type of the element doesn't matter, but an element with the id `id-one` must be contaned within an element with a class name of `class-one` for the style to take effect. For example, the rule will **not** apply to the following sets of JSX:
 >
-> ```html
+> ```jsx
 > <element>
 >   <element id="id-two">I will NOT be green</element>
 > </element>
 > ```
 >
-> ```html
+> ```jsx
 > <element>I will NOT be green</element>
 > ```
 >
-> ```html
+> ```jsx
 > <element className="class-two">
 >   <element id="id-two">I will NOT be green</element>
 > </element>
@@ -797,8 +807,8 @@ export default Button;
 
 To view this component in your browser, import the `Button` component and then insert the following JSX into the `App` component and open `localhost:8080` with your dev server running:
 
-```html
-<Button label="Test Label" onClick={() => console.log('clicked!')} />
+```jsx
+<Button label="Test Label" onClick={() => console.log("clicked!")} />
 ```
 
 For the following components that you will be creating, we recommend that you import each component into the `App` component to view your progress on the component and to get a feel for working with a live-reloading dev server.
@@ -809,30 +819,25 @@ You will now be creating the `ProfileIcon` component. This component will be a s
 
 The `imageUrl` prop will be passed into the `src` prop of the `img` element, the `username` prop needs to be placed into the `alt` prop of the `img` element as below:
 
-```text
+```jsx
 alt={`profile of user ${username}`}
 ```
 
 Insert the `className` prop into the top-level container of the element (in this case the `div`) as follows:
 
-```text
+```jsx
 className={`profile-icon-container ${className}`}
 ```
 
-> Discuss image importing
-> Show images of completed components
+> As a reminder, you can view the end result of these components in the [included design files](https://www.figma.com/file/xyiPBrqZVD3YZ9vyciycbY/DALI-Dev-Intro-DALIChat?node-id=67%3A0).
 
 #### ProfileCard Component
 
 To create the `ProfileCard` component, again walk through the basic steps to creating a React component. Insert the basic JSX elements into the `ProfileCard` component with appropriate class names and ids by following the structure of the `ProfileCard.scss` file. This component will use anchors (`a`) for the `fullName` and `username` props with `href` props of `/user/{uid}`
 
-> Discuss svg importing
+When including the `blurb` and `portfolioUrl` props, note that we haven't assigned these props defaults while they are technically optional. The reason we have done this is because we want to use the existence (or lack thereof) to change how the component is rendered. We do this using the [`logical AND` operator (`&&`)](https://reactjs.org/docs/conditional-rendering.html#inline-if-with-logical--operator), which you may be familiar with from previous CS classes. In React, we can use this operator to modify the rendering of components based on boolean conditions. Within React, logical AND has the following behavior:
 
-When including the `blurb` and `portfolioUrl` props, note that we haven't assigned these props defaults while they are technically optional. The reason we have done this is because we want to use the existence (or lack thereof) to change how the component is rendered. We do this using the `logical AND` operator (`&&`), which you may be familiar with from previous CS classes. In React, we can use this operator to modify the rendering of components based on boolean conditions. Within React, logical AND has the following behavior:
-
-> LINK FOR AND
-
-```js
+```jsx
 <div>{blurb && <p>{blurb}</p>}</div> // If blurb is undefined (not passed as a prop), this expression returns false
 ```
 
@@ -842,7 +847,7 @@ We will be using this behavior on the `blurb` and `portfolioUrl` props to not re
 
 #### TabContainer Component
 
-To create the `TabContainer` component, first create the outline of a basic React component, then create a container `div` with a child `div` and a child ordered list (`ol`). For this component, we must explicitly return JSX and cannot use the shorthand mentioned above.
+To create the `TabContainer` component, first create the outline of a basic React component, then create a container `div` with a child ordered list (`ol`) element and a child `div` element. For this component, we must explicitly return JSX and cannot use the shorthand mentioned above.
 
 Above the `return (...)` function call, insert the following line:
 
@@ -852,11 +857,9 @@ const childrenArray = React.Children.toArray(children);
 
 This allows us access to an array of JSX elements representing the children of the current React component (as discussed [above](#Component-Prop-Requirements)). We will then be able to iterate through these children and render content based on each child JSX element.
 
-> SHOW DESIGNS
-
 The `TabContainer` component is intended to simplify the process of creating a series of tabs and rendering only the content from the active tab. Below is an example of the usage of the `TabContainer` component:
 
-```html
+```jsx
 <TabContainer activeTab="{activeTab}" setActiveTab="{setActiveTab}">
   <div label="New Posts">Content of "New Posts" tab</div>
   <div label="Popular Posts">Content of "Popular Posts" tab</div>
@@ -874,34 +877,117 @@ We can implement this functionality by acessing the `children` prop of the `TabC
 3. Render a tab with the given label
 4. Render the content of the given tab below the tab
 
-To iterate t
+To iterate through all of the children of the `TabContainer` component, we first need to ensure that the `children` prop is an array of valid JSX elements. To do this, we need to use th `childrenArray` we declared above. With this, we can use the [Array Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) function to return a tab for each child encountered:
 
-> Discuss svg importing
+```jsx
+<div>
+  {
+    childrenArray.map((child) => {
+      const { label } = child.props;
+      return (
+        <Tab
+          isActive={activeTab === label}
+          label={label}
+          key={label}
+          onClick={() => setActiveTab(label)}
+        />
+      );
+    });
+  }
+</div>
+```
+
+We haven't built the `Tab` component yet, so this code will throw errors unless you have written an outline for the `Tab` component and imported it into the `TabContainer` component.
+
+To render the appropriate content for the given active tab, we need to render the content of the `div` element with the label matching the active tab. We do this with the JSX below:
+
+```jsx
+<div>
+  {childrenArray.find((child) => child.props.label === activeTab)?.props
+    ?.children || "Tab Empty"}
+</div>
+```
+
+This expression loops through all of the children of the `TabContainer` component and finds the child with a `label` prop matching the current `activeTab` string. Once the appropriate tab is found, we then access the `children` prop of this element and render these children. If no child elements exist for the `TabContainer` element or the child element with the corresponding `label` prop doesn't have any valid children, the string `"Tab Empty"` will be rendered.
+
+> As a note, the `?.` syntax is known as [Optional Chaining](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) and is a very useful syntax to be familiar with!
+
+Now that we have introduced more advanced topics dealing with React's `children` prop, place the Tab-creation code snippet as a child of the ordered list element you created earlier. Place the code snippet that renders the content of each tab within the `div` container that we created before (below the `ol`). You should now have a component that looks like this!
+
+```jsx
+import React from "react";
+import { useHistory } from "react-router-dom";
+import Tab from "../Tab";
+
+import "./TabContainer.scss";
+
+const TabContainer = ({
+  activeTab,
+  setActiveTab,
+  updateUrls = false,
+  urlBase = "",
+  className = "",
+  children,
+}) => {
+  const childrenArray = React.Children.toArray(children);
+  const history = useHistory();
+
+  return (
+    <div className={`tab-container-container ${className}`}>
+      <ol className="tab-list">
+        {childrenArray.map((child) => {
+          const { label } = child.props;
+          return (
+            <Tab
+              isActive={activeTab === label}
+              label={label}
+              key={label}
+              onClick={() => {
+                if (updateUrls) {
+                  history.push(`${urlBase}/${label.toLowerCase()}`);
+                }
+                setActiveTab(label);
+              }}
+            />
+          );
+        })}
+      </ol>
+      <div className="tab-container-content">
+        {childrenArray.find((child) => child.props.label === activeTab)?.props
+          ?.children || "Tab Empty"}
+      </div>
+    </div>
+  );
+};
+
+export default TabContainer;
+```
 
 ### Create Other Generics
 
-Introduce good practices (follow scss files for JSX structure, destructure inline, etc...)
+You should now have created the `Button`, `ProfileIcon`, `ProfileCard`, and `TabContainer` elements. With the provided designs, it's your turn to create the `Tab`, `TabGroup`, `LoadingIcon`, and `ErrorPopover` components. Remember to use the `TabContainer` component within the `TabGroup` component and to follow the structure of the `*.scss` file to determine the structure of the JSX you will be creating. The `LoadingIcon` component will simply be a paragraph element with no props, and the `ErrorPopover`, `Tab`, and `TabGroup` components are specified within the provided designs.
 
-create all other components based on required props and designs
-
-Mock Button, LoadingIcon in App
-Mock ProfileCard in
-Place ErrorPopover in App
+As always, if you ever need any help feel free to reach out to us at any time. Good luck!
 
 ## Readings
 
-> TODO
+Below are some readings building on the idea of component reusability we discussed in today's out of class work and introducing concepts we will be discussing in the next class section.
 
 ### Component Reusability
 
-> TODO
+- [The Three Levels of Reusability in React](https://hackernoon.com/the-three-types-of-reusable-react-components-37a6bf7c2d69)
+- [How to Maximize Reusability for Your React Components](https://medium.com/better-programming/how-to-maximize-reusability-for-your-react-components-d9607c04f2aa)
 
 ### Intro to Lifecycle Methods
 
-> TODO
+- [State and Lifecycle](https://reactjs.org/docs/state-and-lifecycle.html) (ReactJS)
+- [React.Component](https://reactjs.org/docs/react-component.html) (ReactJS)
+- [React Lifecycle Methods Diagram](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
 
 ### Intro to Hooks
 
-> TODO
+- [Hooks at a Glance](https://reactjs.org/docs/hooks-overview.html) (skim this through "✌️ Rules of Hooks ")
 
-As always, if you ever need any help feel free to reach out to us at any time. Good luck!
+### Misc
+
+- [JS Destructuring in 100 Seconds](https://www.youtube.com/watch?v=UgEaJBz3bjY) (highly recommend you subscribe to this channel!)
